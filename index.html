@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Guide — Your AI Study Co-Pilot</title>
+<meta name="description" content="Nova Guide is an iPhone app that helps students figure out what to do, when to do it, and how to begin.">
+<style>
+  :root{
+    --bg:#0a0e1f; --bg2:#0d1330; --card:rgba(255,255,255,.04);
+    --ink:#eef2ff; --muted:#a9b2d0; --line:rgba(255,255,255,.10);
+    --teal:#5eead4; --violet:#a78bfa; --accent:#7dd3fc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.6; overflow-x:hidden;
+  }
+  /* starfield */
+  .stars{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(1200px 700px at 70% -10%, #1a2352 0%, transparent 60%),
+    radial-gradient(900px 600px at 10% 10%, #16203f 0%, transparent 55%),
+    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);}
+  .stars::after{content:"";position:absolute;inset:0;opacity:.5;
+    background-image:
+      radial-gradient(1.4px 1.4px at 20% 30%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 80% 20%, #cfe3ff, transparent),
+      radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+      radial-gradient(1.6px 1.6px at 65% 55%, #dbeafe, transparent),
+      radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 15% 85%, #e0e7ff, transparent);
+    background-repeat:no-repeat;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  /* nav */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.2px}
+  .logo{width:34px;height:34px;border-radius:10px;background:
+    radial-gradient(circle at 30% 30%, #1e2a5e, #0a0e1f);
+    border:1px solid var(--line);position:relative;flex:0 0 auto}
+  .logo::before{content:"";position:absolute;inset:0;background-image:
+    radial-gradient(1.5px 1.5px at 30% 35%, var(--teal), transparent),
+    radial-gradient(1.5px 1.5px at 62% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 72% 60%, var(--violet), transparent),
+    radial-gradient(1.5px 1.5px at 45% 62%, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 50% 48%, #fff, transparent);}
+  nav a{color:var(--muted);text-decoration:none;font-size:.95rem;margin-left:20px}
+  nav a:hover{color:var(--ink)}
+  /* hero */
+  header{text-align:center;padding:70px 0 40px}
+  .pill{display:inline-block;font-size:.8rem;color:var(--teal);
+    border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:26px;
+    background:var(--card)}
+  h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.1;letter-spacing:-.5px;font-weight:800}
+  h1 .grad{background:linear-gradient(120deg,var(--teal),var(--accent),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:clamp(1.05rem,2.4vw,1.28rem);max-width:600px;margin:22px auto 0}
+  .cta{display:inline-flex;gap:12px;margin-top:34px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-block;padding:13px 24px;border-radius:12px;font-weight:600;text-decoration:none;font-size:1rem}
+  .btn.primary{background:linear-gradient(120deg,var(--teal),var(--accent));color:#06121a}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+  .note{color:var(--muted);font-size:.85rem;margin-top:16px}
+  /* features */
+  section{padding:56px 0}
+  .eyebrow{text-align:center;color:var(--violet);font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:.78rem;margin-bottom:12px}
+  h2{text-align:center;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.3px;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:34px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .card h3{font-size:1.15rem;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.96rem}
+  .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
+    background:rgba(125,211,252,.12);border:1px solid var(--line);font-size:1.2rem}
+  /* audience */
+  .band{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:40px;text-align:center}
+  .band p{color:var(--muted);max-width:620px;margin:14px auto 0}
+  .disc{color:var(--muted);font-size:.86rem;max-width:640px;margin:22px auto 0;font-style:italic}
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:34px 0;margin-top:40px}
+  .frow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:.9rem}
+  footer a:hover{color:var(--ink)}
+  .copy{color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="brand"><span class="logo"></span> Nova Guide</div>
+    <div>
+      <a href="#features">Features</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </nav>
+
+  <header>
+    <span class="pill">Your AI Study Co-Pilot</span>
+    <h1>Know <span class="grad">what to do</span>,<br>when to do it, and how to begin.</h1>
+    <p class="sub">Nova Guide is an iPhone app that helps students turn a overwhelming pile of assignments into a clear, calm plan for the day.</p>
+    <div class="cta">
+      <a class="btn primary" href="#features">See how it works</a>
+      <a class="btn ghost" href="support.html">Get support</a>
+    </div>
+    <p class="note">Coming soon to the App Store.</p>
+  </header>
+
+  <section id="features">
+    <div class="eyebrow">Built for how students actually work</div>
+    <h2>Less deciding. More doing.</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="ic">🌟</div>
+        <h3>A plan for today</h3>
+        <p>See a single, chronological plan for the day so you always know the next thing to start — no more staring at a blank to-do list.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📚</div>
+        <h3>Assignments, broken down</h3>
+        <p>Each assignment shows priority, effort, and a set of suggested first steps, so big projects stop feeling impossible to begin.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🗓️</div>
+        <h3>Your real schedule</h3>
+        <p>Optionally connect Google Calendar to see classes, study blocks, and commitments together in one clear timeline.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📈</div>
+        <h3>Progress that encourages</h3>
+        <p>Track weekly progress and subject-by-subject momentum with a supportive, non-competitive view of how far you've come.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="band">
+      <div class="eyebrow">Who it's for</div>
+      <h2>Made for busy, overloaded students</h2>
+      <p>Nova Guide is designed for U.S. high-school and college students — especially anyone who struggles with time management, prioritization, or simply getting started. It meets you where you are and helps you take the next small step.</p>
+      <p class="disc">Nova Guide is an organizational and educational tool. It is not a medical, diagnostic, or therapeutic product, and it does not promise specific outcomes.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="frow">
+      <div class="brand"><span class="logo"></span> Nova Guide</div>
+      <div>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="mailto:support@nova-guide.com">Contact</a>
+      </div>
+    </div>
+    <p class="copy" style="margin-top:18px">© 2026 Nova Guide. All rights reserved.</p>
+  </footer>
+
+</div>
+</body>
+</html>
