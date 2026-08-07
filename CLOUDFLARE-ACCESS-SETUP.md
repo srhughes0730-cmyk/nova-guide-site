@@ -261,23 +261,32 @@ The one thing that breaks GitHub-Pages-behind-Cloudflare is an SSL **mode mismat
   larger change and isn't needed just to remove the gate.
 
 
-## Docs sidebar / content staleness (added 2026-08-07)
+## Docs sidebar / content staleness (added 2026-08-07; root cause corrected same day)
 
 Symptom: docs.nova-guide.com shows an outdated sidebar or page content even
-though the GitHub Pages deploy succeeded (observed 2026-08-07: sidebar ended at
-ADR 0019 while the repo had 0021).
+though main has newer commits (observed 2026-08-07: sidebar frozen at ADR 0019
+for ~22 hours, then at ADR 0020 after partial recovery).
 
-Cause: Docsify fetches `_sidebar.md` and page `.md` files at runtime as plain
-assets, and Cloudflare's edge cache serves stale copies of them.
+ACTUAL root cause (two layers, diagnosed 2026-08-07):
 
-Fix (one-time):
-1. Cloudflare dashboard → nova-guide.com zone → Caching → Configuration →
-   **Purge Everything** (or purge by hostname `docs.nova-guide.com`).
-2. Rules → Cache Rules → create rule "Docs bypass":
-   - When: Hostname equals `docs.nova-guide.com`
-   - Then: **Bypass cache**
-   (The docs site is small and behind Access anyway — edge caching buys nothing
-   and costs freshness.)
+1. **A protection rule on the `github-pages` environment** put a deploy run
+   into "Waiting" on 2026-08-06. The workflow's `concurrency: group "pages"`
+   then queued every subsequent push behind it — the site froze at the last
+   green deploy. Fix: repo → Settings → Environments → github-pages → keep it
+   free of required reviewers and wait timers.
+2. **Un-jamming the queue deployed out of order.** Re-running/approving the
+   old stuck run made it finish AFTER the newest run — and GitHub Pages serves
+   whichever deploy finished last, so the site regressed to that old commit's
+   snapshot. Fix: Actions → "Deploy docs to GitHub Pages" → **Run workflow**
+   (workflow_dispatch, branch main) to force a fresh deploy of current main;
+   it finishes last and wins.
 
-After that, every push to main appears on the site as soon as the
-"Deploy docs to GitHub Pages" action finishes.
+Cloudflare hardening done the same day (defense, not the root cause): a Cache
+Rule bypasses cache for docs requests, so Docsify's runtime-fetched `.md`
+files can never be served stale from the edge. Browser caches can still hold
+`.md` for up to 10 minutes (GH Pages max-age=600) — hard-refresh when checking
+a fresh deploy.
+
+Quick triage order for future staleness: (1) hard refresh / incognito,
+(2) Actions tab — is the newest run green and the LATEST deploy?, (3) if runs
+are "Waiting", check environment protection, (4) force workflow_dispatch.
