@@ -259,3 +259,25 @@ The one thing that breaks GitHub-Pages-behind-Cloudflare is an SSL **mode mismat
 - Cloudflare **DNS** → set `docs` back to **DNS only (grey)** to stop proxying.
 - Nameservers can be pointed back to GoDaddy later if desired, but that's a separate,
   larger change and isn't needed just to remove the gate.
+
+
+## Docs sidebar / content staleness (added 2026-08-07)
+
+Symptom: docs.nova-guide.com shows an outdated sidebar or page content even
+though the GitHub Pages deploy succeeded (observed 2026-08-07: sidebar ended at
+ADR 0019 while the repo had 0021).
+
+Cause: Docsify fetches `_sidebar.md` and page `.md` files at runtime as plain
+assets, and Cloudflare's edge cache serves stale copies of them.
+
+Fix (one-time):
+1. Cloudflare dashboard → nova-guide.com zone → Caching → Configuration →
+   **Purge Everything** (or purge by hostname `docs.nova-guide.com`).
+2. Rules → Cache Rules → create rule "Docs bypass":
+   - When: Hostname equals `docs.nova-guide.com`
+   - Then: **Bypass cache**
+   (The docs site is small and behind Access anyway — edge caching buys nothing
+   and costs freshness.)
+
+After that, every push to main appears on the site as soon as the
+"Deploy docs to GitHub Pages" action finishes.
