@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Guide — Your AI Study Co-Pilot</title>
 <meta name="description" content="Nova Guide is an iPhone app that helps students figure out what to do, when to do it, and how to begin.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   :root{
     --bg:#0a0e1f; --bg2:#0d1330; --card:rgba(255,255,255,.04);
@@ -35,15 +37,8 @@
   /* nav */
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.2px}
-  .logo{width:34px;height:34px;border-radius:10px;background:
-    radial-gradient(circle at 30% 30%, #1e2a5e, #0a0e1f);
-    border:1px solid var(--line);position:relative;flex:0 0 auto}
-  .logo::before{content:"";position:absolute;inset:0;background-image:
-    radial-gradient(1.5px 1.5px at 30% 35%, var(--teal), transparent),
-    radial-gradient(1.5px 1.5px at 62% 30%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 72% 60%, var(--violet), transparent),
-    radial-gradient(1.5px 1.5px at 45% 62%, var(--accent), transparent),
-    radial-gradient(1.5px 1.5px at 50% 48%, #fff, transparent);}
+  .logo{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+    flex:0 0 auto;object-fit:cover;display:block}
   nav a{color:var(--muted);text-decoration:none;font-size:.95rem;margin-left:20px}
   nav a:hover{color:var(--ink)}
   /* hero */
@@ -87,7 +82,7 @@
 <div class="wrap">
 
   <nav>
-    <div class="brand"><span class="logo"></span> Nova Guide</div>
+    <div class="brand"><img class="logo" src="icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</div>
     <div>
       <a href="#features">Features</a>
       <a href="get.html">Get the app</a>
@@ -157,7 +152,7 @@
 
   <footer>
     <div class="frow">
-      <div class="brand"><span class="logo"></span> Nova Guide</div>
+      <div class="brand"><img class="logo" src="icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</div>
       <div>
         <a href="get.html">Get the app</a>
         <a href="support.html">Support</a>

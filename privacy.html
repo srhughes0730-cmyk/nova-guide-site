@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — Nova Guide</title>
 <meta name="description" content="Nova Guide privacy policy.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   :root{--bg:#0a0e1f;--bg2:#0d1330;--card:rgba(255,255,255,.04);--ink:#eef2ff;
     --muted:#a9b2d0;--line:rgba(255,255,255,.10);--teal:#5eead4;--violet:#a78bfa;--accent:#7dd3fc}
@@ -17,13 +19,8 @@
   .wrap{max-width:760px;margin:0 auto;padding:0 22px}
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;text-decoration:none;color:var(--ink)}
-  .logo{width:32px;height:32px;border-radius:9px;background:radial-gradient(circle at 30% 30%, #1e2a5e, #0a0e1f);
-    border:1px solid var(--line);position:relative;flex:0 0 auto}
-  .logo::before{content:"";position:absolute;inset:0;background-image:
-    radial-gradient(1.4px 1.4px at 32% 35%, var(--teal), transparent),
-    radial-gradient(1.4px 1.4px at 64% 30%, #fff, transparent),
-    radial-gradient(1.4px 1.4px at 72% 62%, var(--violet), transparent),
-    radial-gradient(1.4px 1.4px at 46% 60%, var(--accent), transparent)}
+  .logo{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);
+    flex:0 0 auto;object-fit:cover;display:block}
   nav a.link{color:var(--muted);text-decoration:none;font-size:.95rem}
   nav a.link:hover{color:var(--ink)}
   header{padding:34px 0 10px}
@@ -49,7 +46,7 @@
 <div class="wrap">
 
   <nav>
-    <a class="brand" href="index.html"><span class="logo"></span> Nova Guide</a>
+    <a class="brand" href="index.html"><img class="logo" src="icon.png" alt="Nova Guide app icon" width="32" height="32"> Nova Guide</a>
     <a class="link" href="index.html">← Home</a>
   </nav>
 
