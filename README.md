@@ -7,6 +7,7 @@ Static marketing + legal site for **nova-guide.com**, hosted free on GitHub Page
 | File | Purpose | Live URL (once deployed) |
 |------|---------|--------------------------|
 | `index.html` | Landing page | `https://nova-guide.com/` |
+| `get.html` | Download / "Get the app" page — **QR code target** | `https://nova-guide.com/get` |
 | `privacy.html` | Privacy policy (**fill in placeholders first**) | `https://nova-guide.com/privacy` |
 | `support.html` | Support / contact page | `https://nova-guide.com/support` |
 | `CNAME` | Tells GitHub Pages the custom domain | — |
@@ -40,3 +41,24 @@ account/Calendar data, have it reviewed by someone qualified before App Store su
 The two URLs Apple asks for at submission:
 - Privacy Policy URL → `https://nova-guide.com/privacy`
 - Support URL → `https://nova-guide.com/support`
+
+## Download page / QR code (`get.html`)
+
+Print material (conference, flyers, posters) encodes a QR code pointing at
+**`https://nova-guide.com/get`** — a stable URL that never changes, so the QR is
+printed once and reused forever. All "Get the app" links across the site funnel
+into this page, which holds the **only** external download link (`#get-link`).
+
+**Updating the download target (the one place you ever touch):**
+
+- **Beta (now):** set `#get-link`'s href in `get.html` to the public TestFlight
+  invite URL (App Store Connect → TestFlight → your app → Public Link). Keep the
+  "Join the TestFlight beta" button.
+- **Go-live:** in `get.html`, point `#get-link` at the App Store product URL
+  (`https://apps.apple.com/app/idXXXXXXXXXX`) and swap the beta button for the
+  official "Download on the App Store" badge — the markup is stubbed in an HTML
+  comment right below the beta button. The QR code does **not** change.
+
+> Note: Apple's marketing guidelines reserve the official "Download on the App
+> Store" badge for links to an actual App Store product page, so it's used only
+> at go-live — not for the TestFlight link during beta.
