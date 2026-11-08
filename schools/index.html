@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Guide for Schools — Information for IT Administrators</title>
+<meta name="description" content="What Nova Guide is, exactly what it reads from Google Classroom and Calendar, how student data is handled, and how to approve it in your Google Workspace.">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="schools.css">
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <nav class="top" aria-label="Main">
+    <a class="brand" href="../index.html"><img class="logo" src="../icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</a>
+    <div class="links">
+      <a href="./" aria-current="page">For Schools</a>
+      <a href="approve.html">Approval Guide</a>
+      <a href="../get.html">Get The App</a>
+      <a href="../support.html">Support</a>
+      <a href="../privacy.html">Privacy</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="pill">For school IT administrators</span>
+    <h1>A study planner that <span class="grad">only reads</span> — and keeps everything on the student's iPhone.</h1>
+    <p class="lead">If a student asked to connect Nova Guide to their school Google account, this page explains what the app is, exactly what it reads, and how it handles that data, so you can review the request quickly.</p>
+    <div class="cta">
+      <a class="btn primary" href="approve.html">How to approve (5 min)</a>
+      <a class="btn ghost" href="nova-guide-for-schools.pdf">Download as PDF</a>
+    </div>
+
+    <div class="facts" role="list">
+      <div class="fact" role="listitem"><b>Read-only</b><span>Never writes, submits, or deletes anything in Google</span></div>
+      <div class="fact" role="listitem"><b>No servers</b><span>No backend, no database, no Nova Guide account</span></div>
+      <div class="fact" role="listitem"><b>Verified by Google</b><span>OAuth verification granted October 2, 2026</span></div>
+      <div class="fact" role="listitem"><b>Free for schools</b><span>No ads; nothing is ever billed to the school</span></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <a href="#why">Why you got a request</a>
+      <a href="#what">What Nova Guide is</a>
+      <a href="#how">How it works</a>
+      <a href="#scopes">What it requests</a>
+      <a href="#data">Where data lives</a>
+      <a href="#ai">AI, explained</a>
+      <a href="#trust">Verification</a>
+      <a href="#faq">Compliance FAQ</a>
+      <a href="#approve">Approving</a>
+    </aside>
+
+    <main>
+      <section id="why">
+        <div class="eyebrow">Why you're seeing this</div>
+        <h2>A student tried to connect, and Google asked you first</h2>
+        <p>In Google Workspace for Education, students designated as under 18 can't use a third-party app until an administrator configures it. When a student taps <em>Connect Google Classroom</em> in Nova Guide, Google shows them:</p>
+        <div class="note"><p><strong>Access blocked: Your institution's admin needs to review Nova Guide</strong><br><span class="muted small">Error 400: access_not_configured</span></p></div>
+        <p>If they tapped <strong>Request access</strong>, Nova Guide is now in your Admin console under <strong>App access control → Apps pending review</strong>. That's expected, and it's how it should work. One approval covers every student in the organizational units you choose.</p>
+      </section>
+
+      <section id="what">
+        <div class="eyebrow">The app</div>
+        <h2>What Nova Guide is</h2>
+        <p>Nova Guide is an iPhone app that helps students decide <strong>what to do, when to do it, and how to begin</strong>. It's designed especially for students who struggle with time management, prioritization, or getting started. It reads a student's assignments and schedule, then builds a realistic plan for the day around their classes and commitments, with work broken into small first steps.</p>
+        <div class="tbl"><table>
+          <tbody>
+            <tr><td><strong>Platform</strong></td><td>iPhone only, iOS 26 or later, from the Apple App Store</td></tr>
+            <tr><td><strong>Audience</strong></td><td>High-school and college students; designed for ages 14+ (App Store rating 13+)</td></tr>
+            <tr><td><strong>Cost</strong></td><td>Free to download with no ads. An optional <em>Nova Guide Plus</em> subscription is bought through Apple (Family Sharing and Ask to Buy supported). Google Classroom import is free. Schools are never billed.</td></tr>
+            <tr><td><strong>Google connection</strong></td><td>Optional. Classroom and Calendar are two <em>separate</em> connections, each with its own consent screen. Students can connect one, both, or neither, and the app works fully without either.</td></tr>
+            <tr><td><strong>Other calendars</strong></td><td>Students on Microsoft 365 / Outlook can let the app read the iPhone's own Calendar app instead. That uses Apple's standard calendar permission and doesn't involve Google.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="disc">Nova Guide is an organizational and educational tool. It is not a medical, diagnostic, or therapeutic product.</p>
+      </section>
+
+      <section id="how">
+        <div class="eyebrow">Architecture</div>
+        <h2>How it works technically</h2>
+        <p>There is no Nova Guide server between the student and Google. The app on the student's iPhone signs in with Google's official SDK, reads the student's own data over HTTPS, and stores it on the phone.</p>
+        <div class="flow" aria-label="Data flow: Google Workspace to the student's iPhone; nothing goes to Nova Guide">
+          <div class="node"><b>Google Workspace</b><span>Classroom &amp; Calendar APIs</span></div>
+          <div class="arrow">read-only<i>→</i>HTTPS</div>
+          <div class="node phone"><b>Student's iPhone</b><span>Plan built and stored on the device</span></div>
+          <div class="arrow cut">nothing sent<i>✕</i></div>
+          <div class="node none"><b>Nova Guide servers</b><span>Don't exist</span></div>
+        </div>
+        <ul class="clean">
+          <li><strong>Network endpoints.</strong> The app contacts only Google's sign-in and API hosts (<code>accounts.google.com</code>, <code>oauth2.googleapis.com</code>, <code>classroom.googleapis.com</code>, <code>www.googleapis.com</code>) and Apple's App Store services for the optional subscription.</li>
+          <li><strong>No third-party SDKs of our own for analytics, ads, or crash reporting.</strong> The only third-party code is Google's Sign-In SDK.</li>
+          <li><strong>Sign-in.</strong> Google's standard OAuth 2.0 consent. Nova Guide never sees the student's Google password; the sign-in token stays in the iPhone's secure storage.</li>
+          <li><strong>Planning is deterministic.</strong> The daily plan comes from fixed rules running on the phone. No student data goes to any server or AI service to produce it.</li>
+          <li><strong>Submitting stays with the student.</strong> Marking work done in Nova Guide never turns it in on Classroom. The app reminds the student, once, to submit it there themselves.</li>
+        </ul>
+      </section>
+
+      <section id="scopes">
+        <div class="eyebrow">Permissions</div>
+        <h2>Exactly what Nova Guide requests</h2>
+        <p>Every scope is <strong>read-only</strong>. Nothing else is requested.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Connection</th><th>OAuth scope</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Classroom</td><td><code>classroom.<wbr>courses.<wbr>readonly</code></td><td>The student's own list of active classes, to label assignments</td></tr>
+            <tr><td>Classroom</td><td><code>classroom.<wbr>student-submissions.<wbr>me.<wbr>readonly</code></td><td>The student's own assignments and their own submission state</td></tr>
+            <tr><td>Calendar</td><td><code>calendar.<wbr>events.<wbr>readonly</code></td><td>Events, so study time is planned around real commitments</td></tr>
+            <tr><td>Calendar</td><td><code>calendar.<wbr>calendarlist.<wbr>readonly</code></td><td>The list of calendars, so classes on shared calendars aren't missed</td></tr>
+            <tr><td>Both</td><td><code>openid</code> <code>email</code> <code>profile</code></td><td>Show the student which account is connected</td></tr>
+          </tbody>
+        </table></div>
+        <div class="grid2">
+          <div class="card yes">
+            <h3>What is read</h3>
+            <ul class="clean">
+              <li><strong>Classroom:</strong> for the student's own coursework in active classes, the title, instructions, due date, work type, the student's own submission state (including when it was turned in), and the course name</li>
+              <li>By default only recent work: due in roughly the last 30 days or later, or undated work posted in the last 6 months. Students can widen this in Settings.</li>
+              <li><strong>Calendar:</strong> each event's title, start and end time, and, where present, its location and description</li>
+            </ul>
+          </div>
+          <div class="card no">
+            <h3>What is never read</h3>
+            <ul class="clean">
+              <li>Grades or the gradebook</li>
+              <li>Rosters or any other student's data</li>
+              <li>Gmail, Drive, or contacts</li>
+              <li>Any administrative Workspace data</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="data">
+        <div class="eyebrow">Data handling</div>
+        <h2>Where the data lives, and how it's removed</h2>
+        <div class="tbl"><table>
+          <thead><tr><th>Data</th><th>Where it lives</th><th>How it's removed</th></tr></thead>
+          <tbody>
+            <tr><td>Imported Classroom assignments and Calendar events</td><td>The student's iPhone only, as a local read-only copy so the app works offline</td><td>Deleted when the student disconnects that connection, or deletes the app</td></tr>
+            <tr><td>A short history of assignments the student marked completed (title, class, due date, completion time)</td><td>The student's iPhone only, kept so their progress history survives a disconnect</td><td>Deleted when the student deletes the app</td></tr>
+            <tr><td>What the plan has learned (for example, how long work actually takes)</td><td>The student's iPhone only</td><td>Cleared in Settings → Plan learning, or by deleting the app</td></tr>
+            <tr><td>Anything on Nova Guide servers</td><td colspan="2"><strong>Nothing.</strong> There are no Nova Guide servers.</td></tr>
+          </tbody>
+        </table></div>
+        <p>A student can revoke access in the app or at myaccount.google.com, and you can revoke it in the Admin console. Either way, reads stop immediately. Revoking never changes anything in Classroom or Calendar, because the app never wrote to them.</p>
+      </section>
+
+      <section id="ai">
+        <div class="eyebrow">AI</div>
+        <h2>AI, explained plainly</h2>
+        <ul class="clean">
+          <li><strong>There is no chatbot.</strong> Students can't type questions or free text to an AI anywhere in the app.</li>
+          <li><strong>The core plan uses no AI.</strong> It's built by fixed, predictable rules on the phone.</li>
+          <li><strong>Optional on-device wording.</strong> On iPhones that support Apple Intelligence, Plus subscribers who turn it on can let Apple's <em>on-device</em> model word suggested assignment steps (from the assignment's instructions), study tips, and plan explanations. When it isn't on, built-in templates are used instead.</li>
+          <li><strong>Nothing leaves the phone, and nothing trains a model.</strong> Nova Guide uses no cloud or third-party AI provider, and no Workspace data is used to train or improve any AI model. That's consistent with Google's Workspace API Limited Use requirements.</li>
+        </ul>
+      </section>
+
+      <section id="trust">
+        <div class="eyebrow">Verification</div>
+        <h2>Verification and privacy status</h2>
+        <div class="tbl"><table>
+          <tbody>
+            <tr><td><strong>Google OAuth verification</strong></td><td>Granted <strong>October 2, 2026</strong>, after Google reviewed the branding, privacy policy, read-only scopes, and Limited Use compliance. Students see Google's standard consent screen with no "unverified app" warning.</td></tr>
+            <tr><td><strong>Apple App Store</strong></td><td>Nova Guide 1.0 is approved by Apple. The App Store privacy label declares no tracking.</td></tr>
+            <tr><td><strong>Privacy policy</strong></td><td><a href="../privacy.html">nova-guide.com/privacy</a>, including Google's Limited Use disclosure</td></tr>
+            <tr><td><strong>Domain</strong></td><td>nova-guide.com is verified in Google Search Console</td></tr>
+          </tbody>
+        </table></div>
+        <div class="note warn"><p>Google's verification and your Admin console setting are <strong>separate controls</strong>. On a domain that restricts third-party apps, students can connect only after you approve. Approving doesn't install the app for anyone. Students still choose whether to download it and whether to connect.</p></div>
+      </section>
+
+      <section id="faq">
+        <div class="eyebrow">Questions reviewers ask</div>
+        <h2>Compliance and security FAQ</h2>
+        <p class="muted small">These answers describe how the app works technically. Where something is a legal determination, we say so. We make no formal compliance certification at this time.</p>
+        <div class="faq">
+          <details>
+            <summary>FERPA</summary>
+            <p>Nova Guide has no backend and stores nothing on a server, so the app itself never receives, holds, or discloses education records. Each student reads <em>their own</em> data onto <em>their own</em> device through their own Google sign-in, and nothing passes through us or any third party. We designed the architecture with FERPA in mind and are glad to share details with your reviewers.</p>
+          </details>
+          <details>
+            <summary>COPPA and students under 18</summary>
+            <p>Nova Guide is designed for students 14 and older (App Store rating 13+) and, with no server, collects no personal information online at any age. Google notes that for users under 18, your organization is responsible for any parental consent required by applicable law before allowing third-party app access. The Admin console shows a "Confirm parental consent" notice when you approve.</p>
+          </details>
+          <details>
+            <summary>HIPAA</summary>
+            <p>Not applicable. Nova Guide is a study planner, not a health or medical app. It collects no health information and is neither a HIPAA covered entity nor a business associate, and it makes no medical or clinical claims.</p>
+          </details>
+          <details>
+            <summary>Can Nova Guide change grades, submit work, or delete anything?</summary>
+            <p>No. Every scope is read-only. The app can't modify, submit, or delete anything in Google Workspace.</p>
+          </details>
+          <details>
+            <summary>Can it reach Gmail, Drive, or other Google services?</summary>
+            <p>No. The scopes grant only read-only Classroom and Calendar access plus basic profile, and Google enforces that at the token level. If you approve with <strong>Specific Google data</strong>, the Admin console also caps the app at exactly those scopes.</p>
+          </details>
+          <details>
+            <summary>Can students see each other's data?</summary>
+            <p>No. The Classroom scope is the <code>.me</code> (own data) variant, so each student's app reads only that student's own courses, assignments, and calendars.</p>
+          </details>
+          <details>
+            <summary>Does the schedule show event locations?</summary>
+            <p>Yes. If a Calendar event has a location (for example "Room 204"), it's shown under that event, only on that student's own device. It's never transmitted or stored anywhere central.</p>
+          </details>
+          <details>
+            <summary>Do we have to allow both Classroom and Calendar?</summary>
+            <p>No. You can allow only the Classroom scopes. Students can still add their schedule by typing it in or by using the iPhone's own Calendar app.</p>
+          </details>
+          <details>
+            <summary>What happens if we revoke access, or a student leaves?</summary>
+            <p>Reads stop immediately. Disconnecting in the app deletes the imported copy from the iPhone. The student's own completed-assignment history stays on their phone until they delete the app, and is never transmitted. Nothing needs cleaning up on the Google side.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="approve">
+        <div class="eyebrow">Next step</div>
+        <h2>Approving Nova Guide</h2>
+        <p>In the Admin console: <span class="path">Security → Access and data control → API controls → Manage App Access → Configure new app</span>. Search for the client ID, choose your organizational units, and set <strong>Access to Google data</strong> to <strong>Specific Google data</strong> with Nova Guide's seven scopes. <strong>Trusted</strong> also works and is simpler.</p>
+        <div class="idline"><span class="muted small">OAuth client ID:</span> <code>390192294129-jgod8s2foofbsmmjpm9t003vlg2qdrt3.apps.googleusercontent.com</code></div>
+        <p class="print-only">Full click-by-click steps, the copy-paste scope list, and troubleshooting: nova-guide.com/schools/approve</p>
+        <div class="cta"><a class="btn primary" href="approve.html">Open the step-by-step guide</a></div>
+      </section>
+
+      <div class="band">
+        <div class="eyebrow">Questions?</div>
+        <h2>We're happy to talk with your reviewers</h2>
+        <p>Email us with any security, privacy, or setup question. We usually reply within a couple of business days.</p>
+        <div class="cta"><a class="btn primary" href="mailto:support@nova-guide.com">support@nova-guide.com</a></div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="frow">
+      <a class="brand" href="../index.html"><img class="logo" src="../icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</a>
+      <div class="links">
+        <a href="../index.html">Home</a>
+        <a href="../get.html">Get The App</a>
+        <a href="./">For Schools</a>
+        <a href="../support.html">Support</a>
+        <a href="../privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <p class="copy-note">© 2026 Nova Guide LLC · nova-guide.com/schools · Last updated November 8, 2026</p>
+  </footer>
+
+</div>
+<script>
+  // Open every FAQ answer when printing, so the PDF handout includes them.
+  function openAll(){document.querySelectorAll('details').forEach(function(d){d.open=true;});}
+  window.addEventListener('beforeprint', openAll);
+  if (/[?&]print\b/.test(location.search)) openAll();
+</script>
+</body>
+</html>
