@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approve Nova Guide in Google Workspace — Step-by-Step Guide</title>
+<meta name="description" content="Click-by-click steps for Google Workspace administrators to approve Nova Guide's read-only Google Classroom and Calendar access, verify it, and change or revoke it later.">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="schools.css">
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <nav class="top" aria-label="Main">
+    <a class="brand" href="../index.html"><img class="logo" src="../icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</a>
+    <div class="links">
+      <a href="./">For Schools</a>
+      <a href="approve.html" aria-current="page">Approval Guide</a>
+      <a href="../get.html">Get The App</a>
+      <a href="../support.html">Support</a>
+      <a href="../privacy.html">Privacy</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="pill">Google Admin console · about 5 minutes</span>
+    <h1>Approve Nova Guide <span class="grad">step by step</span></h1>
+    <p class="lead">For Google Workspace administrators with the Service Settings privilege (super admins have it). You don't need the app installed to approve it. New to Nova Guide? Start with the <a href="./">overview for schools</a>.</p>
+    <div class="cta">
+      <a class="btn primary" href="#steps">Start the steps</a>
+      <a class="btn ghost" href="nova-guide-approval-guide.pdf">Download as PDF</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <a href="#glance">At a glance</a>
+      <a href="#ids">Client ID &amp; scopes</a>
+      <a href="#steps">Step by step</a>
+      <a href="#levels">Which access level</a>
+      <a href="#verify">Verify it worked</a>
+      <a href="#under18">Under-18 students</a>
+      <a href="#revoke">Change or revoke</a>
+      <a href="#trouble">Troubleshooting</a>
+    </aside>
+
+    <main>
+      <section id="glance">
+        <div class="eyebrow">The short version</div>
+        <h2>At a glance</h2>
+        <ol class="steps">
+          <li>Sign in to <a href="https://admin.google.com">admin.google.com</a>.</li>
+          <li>Go to <span class="path">Menu → Security → Access and data control → API controls</span> and click <span class="path">Manage App Access</span>.</li>
+          <li>Under <span class="path">Configured apps</span>, click <span class="path">Configure new app</span> and search for the Nova Guide client ID.</li>
+          <li>Select <strong>Nova Guide</strong>, keep the top-level organizational unit (or pick specific OUs), and click <span class="path">Continue</span>.</li>
+          <li>Under <span class="path">Access to Google data</span>, choose <strong>Specific Google data</strong> and add the seven scopes below. Click <span class="path">Continue → Finish</span>.</li>
+        </ol>
+        <div class="note"><p><strong>Already have a student request?</strong> On the Admin console home page, open <span class="path">App access control → Review apps</span>, point to Nova Guide, and click <span class="path">Configure access</span>. Then pick up at step 4.</p></div>
+      </section>
+
+      <section id="ids">
+        <div class="eyebrow">Copy and paste</div>
+        <h2>Client ID and scopes</h2>
+        <h3>OAuth client ID</h3>
+        <p class="muted small">Searching by client ID rather than by name makes sure you configure exactly this app, not one with a similar name.</p>
+        <div class="copybox"><button class="copy" type="button" data-copy="cid">Copy</button><pre id="cid">390192294129-jgod8s2foofbsmmjpm9t003vlg2qdrt3.apps.googleusercontent.com</pre></div>
+        <h3>The seven scopes to allow</h3>
+        <p class="muted small">All read-only. The last three are Google's standard sign-in scopes. Google requires them for <em>Specific Google data</em>, and without them students can't sign in. To allow Classroom only, leave out the two <code>calendar</code> lines.</p>
+        <div class="copybox"><button class="copy" type="button" data-copy="scopes">Copy</button><pre id="scopes">https://www.googleapis.com/auth/classroom.courses.readonly
+https://www.googleapis.com/auth/classroom.student-submissions.me.readonly
+https://www.googleapis.com/auth/calendar.events.readonly
+https://www.googleapis.com/auth/calendar.calendarlist.readonly
+openid
+https://www.googleapis.com/auth/userinfo.email
+https://www.googleapis.com/auth/userinfo.profile</pre></div>
+      </section>
+
+      <section id="steps">
+        <div class="eyebrow">The detailed version</div>
+        <h2>Step by step in the Google Admin console</h2>
+        <ol class="steps">
+          <li><b class="t">Open App Access</b>
+            Go to <a href="https://admin.google.com">admin.google.com</a>, open <span class="path">Menu → Security → Access and data control → API controls</span>, and click <span class="path">Manage App Access</span>. You'll see <em>Configured apps</em> (apps that already have a setting) and <em>Accessed apps</em> (apps users have signed in to).</li>
+          <li><b class="t">Find Nova Guide by client ID</b>
+            Under <span class="path">Configured apps</span>, click <span class="path">Configure new app</span>, paste the client ID above, click <span class="path">Search</span>, and click <strong>Nova Guide</strong> in the results.</li>
+          <li><b class="t">Choose who it applies to</b>
+            For <span class="path">Scope</span>, leave the <strong>top-level organizational unit</strong> selected to cover every student who chooses to use Nova Guide. This is the simplest option, approved once.
+            <ul><li>Prefer to start smaller? Click <span class="path">Select org units → Include organizations</span>, tick the OUs you want (up to 10 at a time), and click <span class="path">Select</span>. You can widen it later.</li></ul>
+            Then click <span class="path">Continue</span>.</li>
+          <li><b class="t">Choose the access level</b>
+            Under <span class="path">Access to Google data</span>, choose <strong>Specific Google data</strong> and add the seven scopes, or choose <strong>Trusted</strong>. See <a href="#levels">which access level</a> below. Click <span class="path">Continue</span>.</li>
+          <li><b class="t">Review and finish</b>
+            Review the summary and click <span class="path">Finish</span>. If you started from a student request, Google also shows a <em>Confirm parental consent</em> notice and offers to notify the students who asked. Changes usually apply within minutes, but can take up to 24 hours to reach every user.</li>
+        </ol>
+      </section>
+
+      <section id="levels">
+        <div class="eyebrow">Choosing a setting</div>
+        <h2>Which access level to choose</h2>
+        <div class="tbl"><table>
+          <thead><tr><th>Option</th><th>What it means for Nova Guide</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><strong>Specific Google data</strong></td><td>Google lets the app request <em>only</em> the scopes you list. Least privilege, and Google enforces it.</td><td><span class="tag rec">Recommended</span></td></tr>
+            <tr><td><strong>Trusted</strong></td><td>The app may request any Google service. In practice Nova Guide only ever asks for the seven read-only scopes, and students still approve them on Google's consent screen.</td><td><span class="tag">Simplest</span></td></tr>
+            <tr><td><strong>Limited</strong></td><td>The app can reach only Google services your domain hasn't marked as <em>restricted</em>. Works only if Classroom and Calendar aren't restricted.</td><td><span class="tag">Sometimes</span></td></tr>
+            <tr><td><strong>Blocked</strong></td><td>The app can't access any Google data.</td><td><span class="tag">To revoke</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="verify">
+        <div class="eyebrow">Check</div>
+        <h2>Verify the approval worked</h2>
+        <ol class="steps">
+          <li>Ask a student to open Nova Guide → <span class="path">Settings → Accounts &amp; Calendars → Connect Google Classroom</span>, or use the connect prompt on the Assignments tab.</li>
+          <li>They should reach Google's consent screen listing the read-only scopes, with no "unverified app" warning. They approve, and their assignments appear.</li>
+          <li>Google Calendar is connected separately from the same Settings screen.</li>
+        </ol>
+        <p>Still blocked? See <a href="#trouble">troubleshooting</a>.</p>
+      </section>
+
+      <section id="under18">
+        <div class="eyebrow">Education editions</div>
+        <h2>Under-18 students and parental consent</h2>
+        <ul class="clean">
+          <li>In Google Workspace for Education, users designated as under 18 are blocked from every third-party app an admin hasn't configured. That's why students see "Access blocked" until you approve.</li>
+          <li>Under <span class="path">Choose settings for unconfigured apps</span>, you can set different rules for users over and under 18, and choose whether under-18 users can <strong>request access</strong> to apps for themselves.</li>
+          <li>Google states that your organization is responsible for obtaining parental consent, if required by applicable law, before allowing users under 18 to access third-party apps. Nova Guide is designed for students 14 and older and collects no personal information on any server, but the consent decision is your district's.</li>
+        </ul>
+        <div class="note"><p><strong>Google verification and your approval are different things.</strong> Google verified Nova Guide on October 2, 2026, so students see no "unverified app" warning. But on a restricted domain, your approval is still what allows students to connect at all.</p></div>
+      </section>
+
+      <section id="revoke">
+        <div class="eyebrow">Later on</div>
+        <h2>Changing or revoking access</h2>
+        <ul class="clean">
+          <li><strong>For an organizational unit:</strong> in <span class="path">API controls → Manage App Access</span>, point to Nova Guide under <em>Configured apps</em> and click <span class="path">Change access</span>. Or open the app, go to <em>Access to Google data</em>, pick the OU, and set it to <strong>Blocked</strong>. Reads stop for students in that OU.</li>
+          <li><strong>Per student:</strong> the student can disconnect in Nova Guide (<span class="path">Settings → Accounts &amp; Calendars</span>, separately for Classroom and Calendar) or remove access at <a href="https://myaccount.google.com/connections">myaccount.google.com</a>.</li>
+          <li><strong>The data:</strong> revoking never changes Classroom or Calendar, because the app never wrote to them. Disconnecting deletes the imported copy from the iPhone. A short history of assignments the student marked completed stays on their phone, as their own record, until they delete the app. It's never transmitted.</li>
+        </ul>
+      </section>
+
+      <section id="trouble">
+        <div class="eyebrow">If something's off</div>
+        <h2>Troubleshooting</h2>
+        <div class="tbl"><table>
+          <thead><tr><th>What the student sees</th><th>Likely cause</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td>"Access blocked: Your institution's admin needs to review Nova Guide" <code>access_not_configured</code></td><td>Nova Guide has no setting for the student's organizational unit</td><td>Configure it for the OU that contains the student</td></tr>
+            <tr><td>Still blocked after approving</td><td>A different OU was approved, or the change hasn't reached them yet</td><td>Confirm the student's OU is included; allow up to 24 hours; try connecting again</td></tr>
+            <tr><td>Blocked with <strong>Limited</strong> selected</td><td>Classroom or Calendar is a <em>restricted</em> service in your domain</td><td>Switch to <strong>Specific Google data</strong> or <strong>Trusted</strong></td></tr>
+            <tr><td>Blocked or can't sign in with <strong>Specific Google data</strong></td><td>A scope is missing, most often the three sign-in scopes</td><td>Re-check the <a href="#ids">seven scopes</a>; if it persists, set <strong>Trusted</strong> and email us</td></tr>
+            <tr><td>Classroom works but Calendar is blocked (or the reverse)</td><td>Only one connection's scopes were allowed</td><td>Add the missing scopes, or leave it if your policy is Classroom-only</td></tr>
+            <tr><td>"Google hasn't verified this app"</td><td>Shouldn't appear; the app was verified on October 2, 2026</td><td>Update Nova Guide and try again; if it persists, send us a screenshot</td></tr>
+            <tr><td>Connected, but no assignments appear</td><td>No active classes or recent coursework for that student</td><td>The app reads only the student's own active classes, and recent work by default; they can widen the range in Settings</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <div class="band">
+        <div class="eyebrow">Need a hand?</div>
+        <h2>We'll help you get it set up</h2>
+        <p>Send a screenshot of what you or the student are seeing, and we'll reply as soon as we can.</p>
+        <div class="cta"><a class="btn primary" href="mailto:support@nova-guide.com">support@nova-guide.com</a><a class="btn ghost" href="./">Back to the overview</a></div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="frow">
+      <a class="brand" href="../index.html"><img class="logo" src="../icon.png" alt="Nova Guide app icon" width="34" height="34"> Nova Guide</a>
+      <div class="links">
+        <a href="../index.html">Home</a>
+        <a href="../get.html">Get The App</a>
+        <a href="./">For Schools</a>
+        <a href="../support.html">Support</a>
+        <a href="../privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <p class="copy-note">© 2026 Nova Guide LLC · nova-guide.com/schools/approve · Last updated November 8, 2026</p>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('.copy[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { btn.textContent = 'Select and copy'; });
+      } else { btn.textContent = 'Select and copy'; }
+    });
+  });
+</script>
+</body>
+</html>

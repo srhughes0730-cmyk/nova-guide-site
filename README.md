@@ -10,6 +10,10 @@ Static marketing + legal site for **nova-guide.com**, hosted free on GitHub Page
 | `get.html` | Download / "Get the app" page — **QR code target** | `https://nova-guide.com/get` |
 | `privacy.html` | Privacy policy (**fill in placeholders first**) | `https://nova-guide.com/privacy` |
 | `support.html` | Support / contact page | `https://nova-guide.com/support` |
+| `schools/index.html` | For Schools — overview for school IT administrators (what the app reads, data handling, compliance FAQ) | `https://nova-guide.com/schools/` |
+| `schools/approve.html` | Step-by-step Google Admin console approval guide | `https://nova-guide.com/schools/approve` |
+| `schools/schools.css` | Shared styles (incl. print rules) for both For Schools pages | — |
+| `schools/*.pdf` | Print-ready handouts generated from the two pages | `https://nova-guide.com/schools/nova-guide-for-schools.pdf` |
 | `CNAME` | Tells GitHub Pages the custom domain | — |
 | `404.html` | Fallback for unknown paths | — |
 | `.nojekyll` | Serves files as-is (skips Jekyll processing) | — |
@@ -62,3 +66,17 @@ into this page, which holds the **only** external download link (`#get-link`).
 > Note: Apple's marketing guidelines reserve the official "Download on the App
 > Store" badge for links to an actual App Store product page, so it's used only
 > at go-live — not for the TestFlight link during beta.
+
+## For Schools pages (`schools/`)
+
+The two pages are the public versions of `docs/product/school-admin-one-pager.md` and
+`docs/product/school-admin-approval-guide.md` in the app repo — **those Markdown files are
+the source of truth**; update them first, then mirror the change here. The PDF handouts
+are printed from the pages themselves (print styles live in `schools.css`), so regenerate
+them after any content change:
+
+```bash
+CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+"$CHROME" --headless --no-pdf-header-footer --print-to-pdf=schools/nova-guide-for-schools.pdf "file://$PWD/schools/index.html?print"
+"$CHROME" --headless --no-pdf-header-footer --print-to-pdf=schools/nova-guide-approval-guide.pdf "file://$PWD/schools/approve.html?print"
+```
