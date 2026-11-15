@@ -55,17 +55,16 @@ into this page, which holds the **only** external download link (`#get-link`).
 
 **Updating the download target (the one place you ever touch):**
 
-- **Beta (now):** set `#get-link`'s href in `get.html` to the public TestFlight
-  invite URL (App Store Connect → TestFlight → your app → Public Link). Keep the
-  "Join the TestFlight beta" button.
-- **Go-live:** in `get.html`, point `#get-link` at the App Store product URL
-  (`https://apps.apple.com/app/idXXXXXXXXXX`) and swap the beta button for the
-  official "Download on the App Store" badge — the markup is stubbed in an HTML
-  comment right below the beta button. The QR code does **not** change.
+- **Now (1.0 live):** `#get-link` in `get.html` is the official "Download on the
+  App Store" badge pointing at the App Store product page,
+  `https://apps.apple.com/app/id6817147370`. If the download target ever changes,
+  update that one `href`; the QR code does **not** change.
+- *History:* during the beta `#get-link` was a "Join the TestFlight beta" button
+  pointing at the public TestFlight invite link.
 
 > Note: Apple's marketing guidelines reserve the official "Download on the App
-> Store" badge for links to an actual App Store product page, so it's used only
-> at go-live — not for the TestFlight link during beta.
+> Store" badge for links to an actual App Store product page — never use it for a
+> TestFlight link.
 
 ## For Schools pages (`schools/`)
 

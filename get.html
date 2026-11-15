@@ -14,14 +14,10 @@
      so it NEVER needs to be reprinted. Everything funnels through this
      page, and this page has exactly ONE external download link below.
 
-     BETA (now):  point #get-link at the public TestFlight invite URL,
-                  keep the "Join the TestFlight beta" button text/style.
-
-     GO-LIVE:     1. change #get-link href to the App Store product URL
-                     (https://apps.apple.com/app/idXXXXXXXXXX)
-                  2. swap the beta <a> button for the official
-                     "Download on the App Store" badge (markup is stubbed
-                     in an HTML comment further down).
+     NOW (1.0 live): #get-link is the official "Download on the App
+                     Store" badge pointing at the App Store product page
+                     (https://apps.apple.com/app/id6817147370). If the
+                     target ever changes, update that one href only.
      =================================================================== -->
 <style>
   :root{--bg:#0a0e1f;--bg2:#0d1330;--card:rgba(255,255,255,.04);--ink:#eef2ff;
@@ -82,34 +78,26 @@
 
   <main>
     <img class="applogo" src="icon.png" alt="Nova Guide app icon" width="96" height="96">
-    <span class="pill">Now in beta on TestFlight</span>
+    <span class="pill">Available on the App Store</span>
     <h1>Get <span class="grad">Nova Guide</span></h1>
-    <p class="sub">Your calm, on-device study co-pilot for iPhone. Join the beta and help shape the app before it launches on the App Store.</p>
+    <p class="sub">Your calm, on-device study co-pilot for iPhone. Free to download, with no ads.</p>
 
-    <!-- BETA BUTTON — public TestFlight invite link (App Store Connect →
-         TestFlight → your app → Public Link). At go-live this whole <a>
-         is replaced by the official App Store badge stubbed below. -->
-    <a id="get-link" class="getbtn" href="https://testflight.apple.com/join/tar3Q6bt">
-      Join the TestFlight beta
-    </a>
-
-    <!-- ========= GO-LIVE: official App Store badge (uncomment & point at App Store URL) =========
-    <a id="get-link" href="https://apps.apple.com/app/idXXXXXXXXXX"
+    <!-- Official App Store badge — the site's single external download link. -->
+    <a id="get-link" href="https://apps.apple.com/app/id6817147370"
        style="display:inline-block;margin-top:34px"
        aria-label="Download Nova Guide on the App Store">
       <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us"
            alt="Download on the App Store" style="height:54px">
     </a>
-    ========================================================================================= -->
 
-    <p class="note">Requires an iPhone running a recent version of iOS. TestFlight is Apple's free app for trying beta apps — you'll be prompted to install it first if you don't have it.</p>
+    <p class="note">Requires an iPhone running iOS 26 or later.</p>
 
     <div class="steps">
-      <h2>How to join the beta</h2>
+      <h2>How to get started</h2>
       <ol>
-        <li>Tap <strong>Join the TestFlight beta</strong> above on your iPhone.</li>
-        <li>If prompted, install Apple's free <strong>TestFlight</strong> app, then return to the link.</li>
-        <li>Tap <strong>Accept</strong>, then <strong>Install</strong> to get Nova Guide.</li>
+        <li>Tap <strong>Download on the App Store</strong> above on your iPhone.</li>
+        <li>Tap <strong>Get</strong> to install Nova Guide, then open it.</li>
+        <li>Add your assignments yourself, or connect Google Classroom and your calendar if you'd like — connecting is optional.</li>
       </ol>
     </div>
 
