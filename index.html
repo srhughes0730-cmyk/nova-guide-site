@@ -67,9 +67,23 @@
   .card p{color:var(--muted);font-size:.96rem}
   .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
     background:rgba(125,211,252,.12);border:1px solid var(--line);font-size:1.2rem}
+  /* demo video */
+  .player{position:relative;margin-top:34px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+    background:#0a0e1f;aspect-ratio:16/9;box-shadow:0 30px 90px rgba(0,0,0,.45),0 0 120px rgba(85,87,217,.18)}
+  .player video{display:block;width:100%;height:100%;object-fit:cover}
+  .play{position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:50%;border:1px solid rgba(167,139,250,.6);
+    background:rgba(10,14,31,.72);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+    box-shadow:0 0 0 6px rgba(85,87,217,.22),0 0 40px rgba(85,87,217,.55);transition:transform .2s,background .2s}
+  .play:hover,.play:focus-visible{transform:scale(1.06);background:rgba(85,87,217,.55)}
+  .play:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+  .play svg{width:30px;height:30px;margin-left:5px}
+  .play[hidden]{display:none}
+  .vcap{color:var(--muted);font-size:.9rem;text-align:center;max-width:640px;margin:16px auto 0}
+  @media (max-width:600px){.play{width:68px;height:68px}.play svg{width:24px;height:24px}}
   /* audience */
   .band{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:40px;text-align:center}
   .band p{color:var(--muted);max-width:620px;margin:14px auto 0}
+  .band a{color:var(--teal)}
   .disc{color:var(--muted);font-size:.86rem;max-width:640px;margin:22px auto 0;font-style:italic}
   /* footer */
   footer{border-top:1px solid var(--line);padding:34px 0;margin-top:40px}
@@ -100,10 +114,32 @@
     <p class="sub">Nova Guide is an iPhone app that helps students turn an overwhelming pile of assignments into a clear, calm plan for the day.</p>
     <div class="cta">
       <a class="btn primary" href="get.html">Get the app</a>
-      <a class="btn ghost" href="#features">See how it works</a>
+      <a class="btn ghost" href="#demo">See how it works</a>
     </div>
     <p class="note">Free to download on the App Store for iPhone.</p>
   </header>
+
+  <section id="demo">
+    <div class="eyebrow">See it in action</div>
+    <h2>Nova Guide in about a minute</h2>
+    <div class="player">
+      <!-- Self-hosted on purpose: a YouTube/Vimeo embed would load third-party
+           scripts and cookies, against the site's no-tracking promise. preload="none"
+           keeps the homepage light; the 11 MB file loads only when someone presses play.
+           Click to play, never autoplay (brand guidelines §10). Source and rebuild steps:
+           docs/brand/showcase/README.md in the app repo. -->
+      <video id="demo-video" controls preload="none" playsinline muted
+             poster="media/nova-guide-overview-poster.jpg"
+             aria-label="A one-minute tour of Nova Guide on iPhone. It has no sound and is described below the video.">
+        <source src="media/nova-guide-overview-720p.mp4" type="video/mp4">
+        <a href="media/nova-guide-overview-720p.mp4">Watch the overview video (MP4)</a>
+      </video>
+      <button class="play" id="demo-play" type="button" aria-label="Play the one-minute overview video" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>
+      </button>
+    </div>
+    <p class="vcap">About a minute, no sound. It walks through the Today plan, assignment steps, your schedule, Live Status on the Lock Screen, to-dos, weekly progress, on-device study support, and how your data stays on your iPhone.</p>
+  </section>
 
   <section id="features">
     <div class="eyebrow">Built for how students actually work</div>
@@ -149,6 +185,7 @@
       <p>Nova Guide is designed for U.S. high-school and college students — especially anyone who struggles with time management, prioritization, or simply getting started. It meets you where you are and helps you take the next small step.</p>
       <p><strong>Your data stays on your iPhone.</strong> Nova Guide has no accounts and no servers. Google Classroom and Calendar connections are optional and read-only: your assignments and events go straight from Google to your device to build your plan, and are never sent to us.</p>
       <p><strong>Private by design.</strong> The plan quietly gets more realistic as it learns how long your work actually takes, and on supported iPhones it can use Apple's on-device intelligence to help word suggested steps and study tips. All of that happens on your device — nothing is sent to us or any outside AI service. See our <a href="privacy.html">Privacy Policy</a>.</p>
+      <p><strong>Recognized by NFTE.</strong> Nova Guide was named the top student venture at the 2026 New England Youth Entrepreneurship Showcase, run by the Network for Teaching Entrepreneurship. <a href="press/">See it in the news</a>.</p>
       <p><strong>Using a school Google account?</strong> Your school's IT team can find everything they need to review and approve Nova Guide on our <a href="schools/">For Schools</a> page.</p>
       <p class="disc">Nova Guide is an organizational and educational tool. It is not a medical, diagnostic, or therapeutic product, and it does not promise specific outcomes.</p>
     </div>
@@ -160,6 +197,7 @@
       <div>
         <a href="get.html">Get The App</a>
         <a href="schools/">For Schools</a>
+        <a href="press/">Press</a>
         <a href="support.html">Support</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="mailto:support@nova-guide.com">Contact</a>
@@ -169,5 +207,17 @@
   </footer>
 
 </div>
+<script>
+  // Demo video: show a large play button over the poster, then hand over to the
+  // native controls (pause, seek, full screen). Without JavaScript the native
+  // controls stay on and the video still works.
+  (function () {
+    var v = document.getElementById('demo-video'), b = document.getElementById('demo-play');
+    if (!v || !b) return;
+    v.controls = false; b.hidden = false;
+    b.addEventListener('click', function () { b.hidden = true; v.controls = true; v.play(); });
+    v.addEventListener('ended', function () { v.controls = false; v.load(); b.hidden = false; });
+  })();
+</script>
 </body>
 </html>
